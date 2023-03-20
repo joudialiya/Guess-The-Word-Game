@@ -50,7 +50,11 @@ public class ClientThread extends Thread{
     public void run(){
         
         try{
+
             System.out.println("Log: " + Thread.currentThread().getName()+" : Start");
+            out.write("y\n");
+            out.flush();
+
             in.readLine();
             this.play();
                

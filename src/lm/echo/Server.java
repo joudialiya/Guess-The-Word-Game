@@ -7,8 +7,10 @@ import java.util.*;
 public class Server extends Thread {
 
     public static int MAX_PLAYERS_NBR = 10;
+    
     public List<ClientThread> active_players; 
-    public String[] words = 
+    
+    public String[] words =
         new String[]{
         "Network",
         "HardDrive",
@@ -26,7 +28,7 @@ public class Server extends Thread {
         active_players = new ArrayList<>();
         //this.party_index_to_word = new HashMap<>();
     }
-
+    
     @Override
     public void run(){
         
@@ -38,12 +40,18 @@ public class Server extends Thread {
             serv = new ServerSocket(9090);
             System.out.println("[Server]");
             while(true){
+
                 player_socket = serv.accept();
-                
-                if(active_players.size() < Server.MAX_PLAYERS_NBR){
-                    ClientThread new_thread = new ClientThread(player_socket, this);
+
+                if(active_players.size() < 2){
+
+                    ClientThread new_thread = 
+                        new ClientThread(player_socket, this);
                     active_players.add(new_thread); 
                     new_thread.start();
+                }else{
+                    player_socket.getOutputStream().write('n');
+                    player_socket.getOutputStream().write('\n');
                 }
 
             }
@@ -56,10 +64,10 @@ public class Server extends Thread {
         return this.words [new Random().nextInt(0, this.words.length -1 )].toUpperCase(); 
 
     }
+
     public static void main(String[] argv)
         throws IOException{
 
         new Server().start();
-
     }
 }

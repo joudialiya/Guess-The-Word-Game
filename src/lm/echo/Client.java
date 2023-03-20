@@ -36,8 +36,15 @@ public class Client extends Thread{
     @Override
     public void run(){
         try {
+            // checking the server a availability
+            if (in.readLine().charAt(0) == 'n'){
+                System.out.println("The server is full!");
+                return;
+            }
+
             System.out.println("Welcome player!");
             System.out.println("Enter \"play\" to start the game.");
+
 
             while (input == null || !input.equals("play")){
                 System.out.print(">> ");
@@ -105,7 +112,7 @@ public class Client extends Thread{
     }
     public static void main(String[] argv)
         throws IOException{
+
         new Client().start();
-        
     }
 }
