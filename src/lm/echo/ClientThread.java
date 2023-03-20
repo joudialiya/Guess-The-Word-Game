@@ -50,14 +50,14 @@ public class ClientThread extends Thread{
     public void run(){
         
         try{
-            System.out.println("Log: " +Thread.currentThread().getName()+" : Start");
+            System.out.println("Log: " + Thread.currentThread().getName()+" : Start");
             in.readLine();
             this.play();
                
         }catch(Exception e){
             e.printStackTrace();
         }finally{
-            System.out.println(Thread.currentThread().getName() + " Closed");
+            System.out.println("Log: " + Thread.currentThread().getName() + " Closed");
             server.active_players.remove(this);
         }
     }
@@ -72,7 +72,7 @@ public class ClientThread extends Thread{
 
     private void play() throws IOException{
 
-        System.out.println("good job.");
+        System.out.println("Log: Session start!");
         int state = 4 ; 
         
         while(this.remaining_attempts != 0){
@@ -90,6 +90,9 @@ public class ClientThread extends Thread{
             out.write(Integer.valueOf(state).toString() + "\n");
             out.write(Integer.valueOf(this.remaining_attempts).toString() + "\n");
             out.flush();
+
+            if(state == 3 || state == 4)
+                return;
         }
     }
 
